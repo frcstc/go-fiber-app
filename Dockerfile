@@ -4,5 +4,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 ENV TZ=PRC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /opt/www
+RUN touch .env
 COPY ./goApp /opt/www/
 CMD ["/opt/www/goApp"]
