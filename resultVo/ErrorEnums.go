@@ -13,9 +13,10 @@ const (
 	FORBIDDEN     = 10403
 	NOT_FOUND     = 10404
 	PARAMS_ERROR = 10405
-	RECORD_EXISTS = 20001
+	RECORD_EXISTS = 10406
 	TOKEN_CREATE_ERROR = 30001
-	TOKEN_PARSE_ERROR = 3002
+	TOKEN_PARSE_ERROR = 30002
+	USER_NOT_FOUND = 40404
 )
 
 var codeMsg = map[int]string{
@@ -29,6 +30,7 @@ var codeMsg = map[int]string{
 	RECORD_EXISTS: "记录已存在",
 	TOKEN_CREATE_ERROR: "登录凭证生成失败",
 	TOKEN_PARSE_ERROR: "登录凭证不存在或已过期",
+	USER_NOT_FOUND: "用户不存在",
 }
 
 func GetMsg(code int) string {
