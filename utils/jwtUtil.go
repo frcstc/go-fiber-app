@@ -6,6 +6,7 @@ import (
 	"fiber/resultVo"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gofiber/fiber/v2/utils"
 	"time"
 )
 
@@ -21,6 +22,7 @@ func CreateToken(userId string, passwordVersion int8) string {
 		PasswordVersion: passwordVersion,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(config.TTL).Unix(),
+			Id: utils.UUID(),
 		},
 	}
 

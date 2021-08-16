@@ -17,6 +17,8 @@ const (
 	TOKEN_CREATE_ERROR = 30001
 	TOKEN_PARSE_ERROR = 30002
 	USER_NOT_FOUND = 40404
+	USER_LOCKED = 40405
+	USER_LOGIN_ERROR = 40406
 )
 
 var codeMsg = map[int]string{
@@ -31,6 +33,8 @@ var codeMsg = map[int]string{
 	TOKEN_CREATE_ERROR: "登录凭证生成失败",
 	TOKEN_PARSE_ERROR: "登录凭证不存在或已过期",
 	USER_NOT_FOUND: "用户不存在",
+	USER_LOCKED: "用户已被锁定",
+	USER_LOGIN_ERROR: "账号或密码错误",
 }
 
 func GetMsg(code int) string {
