@@ -6,14 +6,16 @@
 package router
 
 import (
-	"fiber/app/business/user/api"
+
 	"fiber/resultVo"
 	"github.com/gofiber/fiber/v2"
 )
 
 func AppRouter(app *fiber.App) {
 	// 路由设置
-	app.Post("/", new(api.UserApi).GetUser)
+	app.Post("/", func(ctx *fiber.Ctx) error {
+		return ctx.JSON(resultVo.Success(nil, ctx))
+	})
 	// 404返回
 	app.Use(func(c *fiber.Ctx) error {
 		return c.JSON(resultVo.Fail(resultVo.NOT_FOUND, c))
