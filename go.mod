@@ -4,10 +4,11 @@ go 1.14
 
 require (
 	github.com/andybalholm/brotli v1.0.3 // indirect
-	github.com/gofiber/fiber/v2 v2.16.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/gofiber/fiber/v2 v2.17.0
 	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/joho/godotenv v1.3.0
-	github.com/klauspost/compress v1.13.3 // indirect
+	github.com/klauspost/compress v1.13.4 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible // indirect
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

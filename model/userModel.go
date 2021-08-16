@@ -7,8 +7,9 @@ package model
 
 type UserModel struct {
 	AiId            int64 `gorm:"column:aiId; primary_key;"`
-	Nickname        string
-	AvatarUrl       string
+	Id string `json:"id"`
+	Nickname        string `json:"nickname"`
+	AvatarUrl       string `json:"avatarUrl"`
 	Mobile          string
 	MobilePrefix    string
 	Password        string
