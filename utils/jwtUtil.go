@@ -2,8 +2,8 @@ package utils
 
 import (
 	"fiber/config"
+	businessError "fiber/error"
 	"fiber/global"
-	"fiber/resultVo"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2/utils"
@@ -30,7 +30,7 @@ func CreateToken(userId string, passwordVersion int8) string {
 	tokenString, err := token.SignedString([]byte(config.JWT_SECRET))
 	if err != nil {
 		global.BLog.Error("jwt token generate err", err)
-		panic(resultVo.TOKEN_CREATE_ERROR)
+		panic(businessError.New(businessError.TOKEN_CREATE_ERROR))
 	}
 	global.SLog.Infof("user login success:  userId: %s token: %s", userId, tokenString)
 	return tokenString
