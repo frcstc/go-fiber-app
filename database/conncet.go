@@ -39,7 +39,7 @@ func ConnectDB() {
 		}),
 	})
 	if err != nil {
-		global.SLog.Error("DB Connect Error", err)
+		global.SLog.Errorf("DB Connect Error %v", err)
 		fmt.Println("DB Connect Error", err)
 	}
 	//一个坑，不设置这个参数，gorm会把表名转义后加个s，导致找不到数据库的表

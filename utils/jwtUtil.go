@@ -43,6 +43,9 @@ func ParseToken(tokenString string) (*CustomClaims, error) {
 		}
 		return []byte(config.JWT_SECRET), nil
 	})
+	if token == nil {
+		return nil, fmt.Errorf("token parse error: token is %v", token)
+	}
 	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		return claims, nil
 	} else {
