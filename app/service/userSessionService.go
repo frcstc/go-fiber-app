@@ -1,16 +1,14 @@
 package userService
 
 import (
-	"fiber/app/entity"
-	"fiber/global"
+	userQo "fiber/app/entity/qo"
+	userRepository "fiber/app/repository"
 	"fiber/model"
 	"fiber/utils"
 )
 
-func CheckUser(dto entity.PasswordLoginDto) *model.UserModel {
-	var user = new(model.UserModel)
-	global.DB.Where("mobile = ?", dto.Mobile).First(user)
-	return user
+func GetUserByMobile(qo *userQo.GetUserByMobileQo) *model.UserModel {
+	return userRepository.GetUserByMobile(qo)
 }
 
 func GetPasswordEncrypt(password string, hash string) string  {

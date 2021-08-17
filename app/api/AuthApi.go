@@ -1,7 +1,8 @@
-package api
+package auth
 
 import (
 	"fiber/app/entity"
+	userQo "fiber/app/entity/qo"
 	"fiber/app/service"
 	"fiber/resultVo"
 	"fiber/utils"
@@ -20,7 +21,9 @@ func PasswordLogin(c *fiber.Ctx) error {
 		panic(resultVo.PARAMS_ERROR)
 	}
 
-	user := userService.CheckUser(loginDto)
+	// 用户查询
+	qo := &userQo.GetUserByMobileQo{Mobile: loginDto.Mobile, MobilePrefix: loginDto.MobilePrefix}
+	user := userService.GetUserByMobile(qo)
 
 	// 判断用户是否存在
 	if user == nil {

@@ -32,7 +32,7 @@ func CreateToken(userId string, passwordVersion int8) string {
 		global.BLog.Error("jwt token generate err", err)
 		panic(resultVo.TOKEN_CREATE_ERROR)
 	}
-	fmt.Printf("userId: %s token: %v \n", userId, tokenString)
+	global.SLog.Infof("user login success:  userId: %s token: %s", userId, tokenString)
 	return tokenString
 }
 
