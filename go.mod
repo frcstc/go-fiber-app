@@ -16,6 +16,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/valyala/bytebufferpool v1.0.0
 	github.com/valyala/fasthttp v1.28.0 // indirect
+	golang.org/x/crypto v0.0.0-20210813211128-0a44fdfbc16e // indirect
 	golang.org/x/net v0.0.0-20210510120150-4163338589ed
 	golang.org/x/sys v0.0.0-20210809222454-d867a43fc93e // indirect
 	gorm.io/driver/mysql v1.1.1

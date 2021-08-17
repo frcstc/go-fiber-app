@@ -6,14 +6,14 @@
 package resultVo
 
 import (
+	businessError "fiber/error"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"time"
 )
 
 type ResultVo struct {
-	Code      int         `json:"code"`
-	Msg       string      `json:"msg"`
+	*businessError.Err
 	TimeStamp int         `json:"timeStamp"`
 	RequestId interface{} `json:"requestId"`
 	Data      interface{} `json:"data"`
@@ -21,30 +21,20 @@ type ResultVo struct {
 
 func Success(data interface{}, c *fiber.Ctx) ResultVo {
 	return ResultVo{
-		Code:      SUCCESS,
-		Msg:       GetMsg(SUCCESS),
+		Err: businessError.New(businessError.SUCCESS),
 		TimeStamp: time.Now().Nanosecond(),
 		Data:      data,
 		RequestId: c.Locals(requestid.ConfigDefault.ContextKey),
 	}
 }
 
-func Fail(code int, c *fiber.Ctx) ResultVo {
+func Fail(error *businessError.Err, c *fiber.Ctx) ResultVo {
 	return ResultVo{
-		Code:      code,
-		Msg:       GetMsg(code),
+		Err: error,
 		TimeStamp: time.Now().Nanosecond(),
 		Data:      nil,
 		RequestId: c.Locals(requestid.ConfigDefault.ContextKey),
 	}
 }
 
-func FailCustom(code int, msg string, c *fiber.Ctx) ResultVo {
-	return ResultVo{
-		Code:      code,
-		Msg:       msg,
-		TimeStamp: time.Now().Nanosecond(),
-		Data:      nil,
-		RequestId: c.Locals(requestid.ConfigDefault.ContextKey),
-	}
-}
+

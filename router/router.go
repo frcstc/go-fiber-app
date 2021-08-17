@@ -7,6 +7,7 @@ package router
 
 import (
 	"fiber/app/api"
+	businessError "fiber/error"
 	"fiber/resultVo"
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,9 +17,9 @@ func AppRouter(app *fiber.App) {
 	app.Post("/", func(ctx *fiber.Ctx) error {
 		return ctx.JSON(resultVo.Success(nil, ctx))
 	})
-	app.Post("/LoginByPassword", api.PasswordLogin)
+	app.Post("/LoginByPassword", auth.PasswordLogin)
 	// 404返回
 	app.Use(func(c *fiber.Ctx) error {
-		return c.JSON(resultVo.Fail(resultVo.NOT_FOUND, c))
+		return c.JSON(resultVo.Fail(businessError.New(businessError.NOT_FOUND), c))
 	})
 }

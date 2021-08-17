@@ -8,6 +8,7 @@ package main
 import (
 	"fiber/config"
 	"fiber/database"
+	businessError "fiber/error"
 	"fiber/global"
 	"fiber/middleware"
 	"fiber/redis"
@@ -17,7 +18,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"log"
-	"strconv"
 )
 
 func main() {
@@ -31,15 +31,14 @@ func main() {
 		AppName: config.Config("APP_NAME"),
 		// 业务异常返回
 		ErrorHandler: func(ctx *fiber.Ctx, e error) error {
-			code := resultVo.SERVER_ERROR
-			eCode, _ := strconv.Atoi(e.Error())
-			msg := resultVo.GetMsg(eCode)
-			if msg != "" {
-				code = eCode
-			} else {
-				msg = e.Error()
+			if err, ok := e.(*businessError.Err); ok {
+				// 业务异常
+				return ctx.JSON(resultVo.Fail(err, ctx))
+			} else  {
+				// 系统异常
+				global.BLog.Errorf("server error %v", e)
+				return ctx.JSON(resultVo.Fail(businessError.New(businessError.SERVER_ERROR), ctx))
 			}
-			return ctx.JSON(resultVo.FailCustom(code, msg, ctx))
 		},
 	}
 

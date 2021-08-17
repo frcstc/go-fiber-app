@@ -1,9 +1,12 @@
-package api
+package auth
 
 import (
 	"fiber/app/entity"
+	userQo "fiber/app/entity/qo"
 	"fiber/app/service"
+	businessError "fiber/error"
 	"fiber/resultVo"
+	"fiber/utils"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -12,18 +15,34 @@ func PasswordLogin(c *fiber.Ctx) error {
 	var loginDto entity.PasswordLoginDto
 
 	if err := c.BodyParser(&loginDto); err != nil {
-		panic(resultVo.BAD_REQUEST)
+		panic(businessError.New(businessError.BAD_REQUEST))
 	}
 
 	if loginDto.Password == "" || loginDto.Mobile == "" {
-		panic(resultVo.PARAMS_ERROR)
+		panic(businessError.New(businessError.PARAMS_ERROR))
 	}
 
-	user := userService.CheckUser(loginDto)
+	// 用户查询
+	qo := &userQo.GetUserByMobileQo{Mobile: loginDto.Mobile, MobilePrefix: loginDto.MobilePrefix}
+	user := userService.GetUserByMobile(qo)
 
+	// 判断用户是否存在
 	if user == nil {
-		panic(resultVo.USER_NOT_FOUND)
+		panic(businessError.New(businessError.USER_NOT_FOUND))
 	}
 
-	return c.JSON(resultVo.Success(user, c))
+	// 判断用户是否被锁定
+	if user.IsLogout || user.IsLogout {
+		panic(businessError.New(businessError.USER_LOCKED))
+	}
+
+	// 判断密码是否相等
+	passwordStr := userService.GetPasswordEncrypt(loginDto.Password, user.PasswordSalt)
+	if passwordStr != user.Password {
+		panic(businessError.New(businessError.USER_LOGIN_ERROR))
+	}
+
+	// 创建token
+	token := utils.CreateToken(user.Id, user.PasswordVersion)
+	return c.JSON(resultVo.Success(token, c))
 }
