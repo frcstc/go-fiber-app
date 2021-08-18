@@ -29,6 +29,7 @@ func defaultPool() *redis.Pool {
 				redis.DialPassword(config.Config("REDIS_PASSWORD")),
 			)
 			if err != nil {
+				global.SLog.Errorf("redis conn err %v", err)
 				fmt.Println("redis conn err", err)
 			}
 			return conn, err
