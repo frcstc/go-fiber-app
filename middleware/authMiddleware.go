@@ -1,8 +1,9 @@
 package middleware
 
 import (
-	userRepository "fiber/app/repository"
+	"fiber/app/repository/userRepository"
 	businessError "fiber/error"
+	"fiber/global"
 	"fiber/utils"
 	"github.com/gofiber/fiber/v2"
 	"strings"
@@ -36,6 +37,11 @@ func AuthMiddleware() fiber.Handler {
 			panic(businessError.New(businessError.TOKEN_EXPIRED))
 		}
 
+		// 放入上下文中
+		global.SetAuthUser(user)
+
 		return ctx.Next()
 	}
 }
+
+

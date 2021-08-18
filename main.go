@@ -36,7 +36,6 @@ func main() {
 				return ctx.JSON(resultVo.Fail(err, ctx))
 			} else  {
 				// 系统异常
-				global.BLog.Errorf("server error %v", e)
 				return ctx.JSON(resultVo.Fail(businessError.New(businessError.SERVER_ERROR), ctx))
 			}
 		},

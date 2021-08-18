@@ -1,6 +1,7 @@
 package global
 
 import (
+	"fiber/model"
 	"github.com/gomodule/redigo/redis"
 	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
@@ -20,3 +21,12 @@ var SLog *log.Logger
 var BLog *log.Entry
 
 var LogFile *os.File
+
+type AuthUserPayload struct {
+	UserId string
+}
+var AuthUser *AuthUserPayload
+
+func SetAuthUser(user *model.UserModel)  {
+	AuthUser = &AuthUserPayload{UserId: user.Id}
+}
