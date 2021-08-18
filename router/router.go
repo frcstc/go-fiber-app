@@ -6,7 +6,7 @@
 package router
 
 import (
-	"fiber/app/api"
+	"fiber/app/api/authApi"
 	businessError "fiber/error"
 	"fiber/middleware"
 	"fiber/resultVo"
@@ -14,17 +14,20 @@ import (
 )
 
 func AppRouter(app *fiber.App) {
-	// 路由设置
-	app.Post("/", func(ctx *fiber.Ctx) error {
+	// auth路由
+	app.Post("/loginByPassword", authApi.PasswordLogin)
+	// 需要登录鉴权的路由
+	apiRoute := app.Group("", middleware.AuthMiddleware())
+	apiRoute.Get("/userInfo", func(ctx *fiber.Ctx) error {
 		return ctx.JSON(resultVo.Success(nil, ctx))
 	})
-	userRoute := app.Group("/user", middleware.AuthMiddleware())
-	userRoute.Get("/info", func(ctx *fiber.Ctx) error {
+	// 其他
+	app.Get("/", func(ctx *fiber.Ctx) error {
 		return ctx.JSON(resultVo.Success(nil, ctx))
 	})
-	app.Post("/loginByPassword", auth.PasswordLogin)
 	// 404返回
 	app.Use(func(c *fiber.Ctx) error {
 		return c.JSON(resultVo.Fail(businessError.New(businessError.NOT_FOUND), c))
 	})
+	// 这个后面不要写
 }

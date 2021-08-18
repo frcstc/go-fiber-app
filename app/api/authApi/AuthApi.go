@@ -1,9 +1,9 @@
-package auth
+package authApi
 
 import (
 	"fiber/app/entity"
 	userQo "fiber/app/entity/qo"
-	"fiber/app/service"
+	"fiber/app/service/userService"
 	businessError "fiber/error"
 	"fiber/resultVo"
 	"fiber/utils"

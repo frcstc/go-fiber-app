@@ -2,7 +2,7 @@ package userService
 
 import (
 	userQo "fiber/app/entity/qo"
-	userRepository "fiber/app/repository"
+	"fiber/app/repository/userRepository"
 	"fiber/model"
 	"fiber/utils"
 )

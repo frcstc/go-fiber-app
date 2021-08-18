@@ -11,8 +11,7 @@ import (
 
 func InitRedis() {
 	// 默认连接池
-	defaultPool := defaultPool()
-	global.Redis = defaultPool.Get()
+	global.Redis = defaultPool().Get()
 }
 
 func defaultPool() *redis.Pool {
