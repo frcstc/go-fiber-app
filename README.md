@@ -5,8 +5,9 @@
 
 
 
-#### 安装教程
-
-1.下载仓库 https://github.com/frcstc/go-fiber-app.git
-2.进入项目，创建.env 文件，复制.envExample中内容到.env中，填好配置
-3.启动 go run main.go 
+#### 使用教程
+```
+  1.下载仓库 https://github.com/frcstc/go-fiber-app.git
+  2.进入项目，创建.env 文件，复制.envExample中内容到.env中，填好配置
+  3.启动 go run main.go 
+```
